@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Wie Computer lernen – Mein KI‑Abenteuer‑Heft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    :root {
+      --bg: #f7f7fb;
+      --fg: #222;
+      --accent: #2b6cb0;
+      --accent-soft: #e3f2fd;
+      --border: #ddd;
+      --card-bg: #ffffff;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+    }
+
+    section {
+      scroll-margin-top: 120px;
+      /* Höhe deiner Menüleiste */
+    }
+
+    header {
+      background: linear-gradient(135deg, #2b6cb0, #805ad5);
+      color: white;
+      padding: 2.5rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+    }
+
+    header p {
+      margin: 0.25rem 0;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .meta-box {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .meta-field label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .meta-line {
+      border-bottom: 1px solid #ccc;
+      min-height: 1.4rem;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.15rem;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tagline {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 0.75rem;
+    }
+
+    .task {
+      margin: 0.5rem 0 0.75rem;
+    }
+
+    .task-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .line {
+      border-bottom: 1px solid #ccc;
+      margin: 0.25rem 0 0.4rem;
+      min-height: 1.2rem;
+    }
+
+    .big-box {
+      border: 1px dashed #bbb;
+      border-radius: 0.5rem;
+      min-height: 120px;
+      margin: 0.4rem 0 0.8rem;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    li {
+      margin: 0.15rem 0;
+    }
+
+    .info-box {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .week-card {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .week-card h4 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .material-list h3 {
+      margin-top: 1rem;
+    }
+
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1rem 2rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .menu {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffffee;
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .menu a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #2b6cb0;
+      background: #e3f2fd;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #2b6cb0;
+      color: white;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header {
+        border-bottom: 1px solid #ccc;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      main {
+        padding: 1.5cm 1.5cm 2cm;
+      }
+
+      footer {
+        padding: 0 1.5cm 1.5cm;
+      }
+
+      .section-card,
+      .meta-box,
+      .week-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Wie Computer lernen – Mein KI‑Abenteuer‑Heft</h1>
+    <p>Ein spielerisches Arbeitsheft für Kinder ab 6 Jahren</p>
+    <p>Mit Spielen, Rätseln, Bastelideen und kleinen Experimenten</p>
+  </header>
+
+  <nav class="menu">
+    <a href="#kap1">Start</a>
+    <a href="./games.html">Games</a>
+  </nav>
+
+  <main>
+
+
+    <section class="section-card" id="kap1">
+      <h2>1. Was ist KI?</h2>
+      <p class="tagline">Für Kinder erklärt</p>
+      <p><strong>Künstliche Intelligenz (KI)</strong> ist ein Computer, der aus Beispielen lernt – so wie du aus
+        Erfahrungen lernst.</p>
+      <div class="two-cols">
+        <div>
+          <p><strong>KI kann:</strong></p>
+          <ul>
+            <li>Muster erkennen</li>
+            <li>Dinge sortieren</li>
+            <li>Bilder erkennen</li>
+            <li>Fragen beantworten</li>
+          </ul>
+        </div>
+        <div>
+          <p><strong>KI kann nicht:</strong></p>
+          <ul>
+            <li>fühlen</li>
+            <li>wissen, was richtig ist</li>
+            <li>entscheiden, was fair ist</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Wichtige Botschaft:</strong> Dafür braucht der Computer dich.</p>
+    </section>
+
+    <section class="section-card">
+      <h2>2. Kapitel 1 – Muster entdecken</h2>
+      <p class="tagline">Muster sind die Lieblingssache von KI – und von dir.</p>
+
+      <div class="task">
+        <div class="task-title">Aufgabe 1: Finde das Muster!</div>
+        <p>Male die Muster weiter:</p>
+        <p>🔵🟡🔵🟡🔵🟡 ___ ___ ___</p>
+        <div class="line"></div>
+        <p>❤️💚💚❤️💚💚❤️ ___ ___</p>
+        <div class="line"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-title">Aufgabe 2: Was gehört nicht dazu?</div>
+        <p>Kreise das Bild ein, das nicht passt:</p>
+        <p>🐶 🐶 🐱 🐶</p>
+        <p>🔺 🔺 🔵 🔺</p>
+        <div class="big-box"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-title">Aufgabe 3: Sortiere!</div>
+        <p>Male drei Dinge, die zusammenpassen:</p>
+        <div class="big-box"></div>
+        <div class="big-box"></div>
+        <div class="big-box"></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>3. Kapitel 2 – Wenn‑Dann‑Regeln</h2>
+      <p class="tagline">Computer lieben klare Regeln. Du auch!</p>
+
+      <div class="task">
+        <div class="task-title">Aufgabe 1: Wenn‑Dann‑Spiel</div>
+        <p>Verbinde:</p>
+        <p>Wenn es regnet → __________________________</p>
+        <p>Wenn ich müde bin → ________________________</p>
+        <p>Wenn ich Hunger habe → _____________________</p>
+        <p>Optionen: ☔ &nbsp; Essen holen &nbsp; 💤 Schlafen gehen</p>
+      </div>
+
+      <div class="task">
+        <div class="task-title">Aufgabe 2: Erfinde deine eigene Regel</div>
+        <p>Wenn ich…</p>
+        <div class="line"></div>
+        <p>Dann…</p>
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>4. Kapitel 3 – Wie Maschinen lernen</h2>
+      <p class="tagline">Du bist der Lehrer – der Computer ist der Schüler.</p>
+
+      <div class="task">
+        <div class="task-title">Experiment: Du bist der Lehrer!</div>
+        <p>Zeige einem Erwachsenen drei Beispiele von etwas (z. B. „Hunde“). Der Erwachsene spielt den „Roboter“ und
+          macht absichtlich Fehler.</p>
+        <p><strong>Deine Aufgabe:</strong> Korrigiere den Roboter!</p>
+        <p>Was hat er falsch gemacht?</p>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-title">Male drei Beispiele</div>
+        <p>Male drei Beispiele von etwas, das du dem Roboter beibringen willst:</p>
+        <div class="big-box"></div>
+        <div class="big-box"></div>
+        <div class="big-box"></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>5. Kapitel 4 – Fairness & Fehler</h2>
+      <p class="tagline">Manchmal ist eine KI unfair – du kannst das merken.</p>
+
+      <div class="task">
+        <div class="task-title">Geschichte: Der Roboter, der nur große Hunde kannte</div>
+        <p>Male einen großen Hund und einen kleinen Hund.</p>
+        <p><strong>Großer Hund:</strong></p>
+        <div class="big-box"></div>
+        <p><strong>Kleiner Hund:</strong></p>
+        <div class="big-box"></div>
+        <p><strong>Warum ist es wichtig, dass der Roboter beide Hunde sieht?</strong></p>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>6. Kapitel 5 – KI ausprobieren (mit Eltern)</h2>
+      <p class="tagline">Jetzt kommt echte KI – aber nur zusammen mit einem Erwachsenen.</p>
+
+      <div class="info-box">
+        <strong>Hinweis:</strong> Diese Aufgaben machst du nur gemeinsam mit einem Erwachsenen. Er oder sie bedient den
+        Computer.
+      </div>
+
+      <div class="task">
+        <div class="task-title">Aufgabe 1: Erfinde ein Fantasietier</div>
+        <p>Male dein Fantasietier hier:</p>
+        <div class="big-box"></div>
+        <p>Ein Erwachsener beschreibt dein Tier einer KI.</p>
+        <p><strong>Was hat die KI gut gemacht?</strong></p>
+        <div class="line"></div>
+        <p><strong>Was war falsch oder komisch?</strong></p>
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>7. Kapitel 6 – Meine KI‑Projekte</h2>
+      <p class="tagline">Jetzt wirst du selbst kreativ mit KI.</p>
+
+      <div class="task">
+        <div class="task-title">Projekt 1: Erfinde eine Geschichte</div>
+        <p>Ich erzähle eine Geschichte über…</p>
+        <div class="line"></div>
+        <div class="line"></div>
+        <p>Die KI ergänzt die Geschichte.</p>
+        <p>Male die beste Szene aus der Geschichte:</p>
+        <div class="big-box"></div>
+      </div>
+
+      <div class="task">
+        <div class="task-title">Projekt 2: Baue einen Roboter aus Lego</div>
+        <p>Male deinen Roboter:</p>
+        <div class="big-box"></div>
+        <p>Was soll er lernen?</p>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>8. Elternbereich</h2>
+      <p>Dieses Heft vermittelt die Grundideen von KI:</p>
+      <ul>
+        <li>Muster</li>
+        <li>Regeln</li>
+        <li>Beispiele</li>
+        <li>Fehler</li>
+        <li>Fairness</li>
+        <li>Verantwortung</li>
+      </ul>
+      <p>Es ist analog, spielerisch und pädagogisch sicher. Digitale KI wird nur gemeinsam genutzt.</p>
+
+      <h3>Empfohlene Wochenstruktur</h3>
+      <div class="week-grid">
+        <div class="week-card">
+          <h4>Woche 1–4: Muster</h4>
+          <ul>
+            <li>2× pro Woche Sortierspiele (15 Min.)</li>
+            <li>1× pro Woche Memory</li>
+            <li>1× pro Woche Muster fortsetzen</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <h4>Woche 5–8: Wenn‑Dann‑Logik</h4>
+          <ul>
+            <li>2× pro Woche Wenn‑Dann‑Spiele</li>
+            <li>1× pro Woche Brettspiel</li>
+            <li>1× pro Woche Regelketten im Alltag</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <h4>Woche 9–12: Lernen aus Beispielen</h4>
+          <ul>
+            <li>2× pro Woche „Roboter spielt falsch“</li>
+            <li>1× pro Woche Beispiel‑Spiel</li>
+            <li>1× pro Woche Fehleranalyse</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <h4>Woche 13–16: Fairness</h4>
+          <ul>
+            <li>1× pro Woche einseitige Beispiele</li>
+            <li>1× pro Woche Gespräch über Fairness</li>
+            <li>1× pro Woche Sortierspiel mit Fehlern</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <h4>Woche 17–20: Erste KI‑Werkzeuge</h4>
+          <ul>
+            <li>1× pro Woche Bild‑KI</li>
+            <li>1× pro Woche Sprach‑KI</li>
+            <li>1× pro Woche Ergebnisbewertung</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <h4>Woche 21–24: Projekte</h4>
+          <ul>
+            <li>1 Projekt pro Woche</li>
+            <li>1 Reflexionsgespräch</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card material-list">
+      <h2>9. Materialliste</h2>
+
+      <h3>Analog</h3>
+      <ul>
+        <li>Papier, Stifte</li>
+        <li>Lego oder Bausteine</li>
+        <li>Memory</li>
+        <li>Sortierkarten (Farben, Formen, Tiere)</li>
+        <li>Bastelmaterial</li>
+        <li>Brettspiele wie Rush Hour, Ubongo, Make ’n’ Break (optional)</li>
+      </ul>
+
+      <h3>Digital (nur gemeinsam mit Eltern)</h3>
+      <ul>
+        <li>Bild‑KI (z. B. DALL·E)</li>
+        <li>Sprach‑KI (z. B. Copilot)</li>
+        <li>Tablet oder Laptop (optional)</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Hinweis:</strong> Diese Seite kann im Browser über „Drucken“ als PDF gespeichert und wie ein Arbeitsheft
+      verwendet werden.</p>
+  </footer>
+</body>
+
+</html>

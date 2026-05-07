@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <title>KI-Abenteuer – Interaktive Lernseite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f7f7fb;
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, #2b6cb0, #805ad5);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    section {
+      scroll-margin-top: 120px;
+      /* Höhe deiner Menüleiste */
+    }
+
+    h2 {
+      color: #2b6cb0;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1rem 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid #ddd;
+      margin-bottom: 1.5rem;
+    }
+
+    .task {
+      margin: 1rem 0;
+    }
+
+    .pattern-box {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn {
+      background: #2b6cb0;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #1e4f80;
+    }
+
+    .choices span {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: #eee;
+      border-radius: 0.5rem;
+      margin: 0.25rem;
+      cursor: pointer;
+    }
+
+    .choices span.correct {
+      background: #c6f6d5;
+    }
+
+    .choices span.wrong {
+      background: #fed7d7;
+    }
+
+    .drag-container {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .drag-item,
+    .drop-zone {
+      padding: 0.75rem;
+      background: #eee;
+      border-radius: 0.5rem;
+      min-width: 120px;
+      text-align: center;
+      cursor: grab;
+    }
+
+    .drop-zone {
+      background: #e3f2fd;
+      border: 2px dashed #2b6cb0;
+    }
+
+    .result {
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+
+    .menu {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffffee;
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .menu a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #2b6cb0;
+      background: #e3f2fd;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #2b6cb0;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>KI‑Abenteuer – Interaktive Lernseite</h1>
+    <p>Spiele, Rätsel und Experimente für Kinder ab 6 Jahren</p>
+  </header>
+
+  <nav class="menu">
+    <a href="#kap1">Muster</a>
+    <a href="#kap2">Wenn‑Dann</a>
+    <a href="#kap3">KI ausprobieren</a>
+    <a href="#kap4">Memory</a>
+    <a href="#kap5">Sortierspiel</a>
+    <a href="#kap6">Mustergenerator</a>
+    <a href="#kap7">Fehler-Finder</a>
+    <a href="#kap8">Projekte</a>
+    <a href="./main.html">Start</a>
+  </nav>
+
+
+  <main>
+
+    <!-- Kapitel 1 – Muster -->
+    <section class="card" id="kap1">
+      <h2>Kapitel 1 – Muster entdecken</h2>
+
+      <div class="task">
+        <h3>Interaktives Muster‑Spiel</h3>
+        <div class="pattern-box" id="pattern">🔵🟡🔵🟡🔵🟡</div>
+        <button class="btn" onclick="extendPattern()">Muster weiterführen</button>
+      </div>
+
+      <div class="task">
+        <h3>Was gehört nicht dazu?</h3>
+        <div class="choices">
+          <span onclick="checkOdd(this, false)">🐶</span>
+          <span onclick="checkOdd(this, false)">🐶</span>
+          <span onclick="checkOdd(this, true)">🐱</span>
+          <span onclick="checkOdd(this, false)">🐶</span>
+        </div>
+        <div id="oddResult" class="result"></div>
+      </div>
+    </section>
+
+    <!-- Kapitel 2 – Wenn-Dann -->
+    <section class="card" id="kap2">
+      <h2>Kapitel 2 – Wenn‑Dann‑Regeln</h2>
+
+      <h3>Ziehe die Regeln an die richtige Stelle</h3>
+
+      <div class="drag-container">
+        <div class="drag-item" draggable="true" ondragstart="drag(event)" id="rain">Es regnet</div>
+        <div class="drag-item" draggable="true" ondragstart="drag(event)" id="tired">Ich bin müde</div>
+      </div>
+
+      <div class="drag-container">
+        <div class="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)" data-correct="rain">
+          → Ich nehme einen Schirm
+        </div>
+        <div class="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)" data-correct="tired">
+          → Ich gehe schlafen
+        </div>
+      </div>
+
+      <div id="dragResult" class="result"></div>
+    </section>
+
+    <!-- Kapitel 3 – KI ausprobieren -->
+    <section class="card" id="kap3">
+      <h2>Kapitel 3 – KI ausprobieren</h2>
+
+      <p>Ein Erwachsener hilft dir dabei.</p>
+
+      <button class="btn" onclick="generateIdea()">Zufällige Fantasie‑Tier‑Idee</button>
+      <p id="ideaBox" style="margin-top:0.5rem; font-weight:bold;"></p>
+
+    </section>
+
+    <section class="card" id="kap4">
+      <h2>Memory – Finde die Paare</h2>
+      <p>Klicke zwei Karten an. Wenn sie gleich sind, bleiben sie offen.</p>
+
+      <div id="memoryBoard" style="display:grid;grid-template-columns:repeat(4,80px);gap:10px;"></div>
+      <p id="memoryStatus" class="result"></p>
+    </section>
+
+    <script>
+      const memoryItems = ["🐶", "🐱", "🐸", "🐵", "🐶", "🐱", "🐸", "🐵"];
+      let memoryFlipped = [];
+      let memoryMatched = [];
+
+      function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+      function buildMemory() {
+        const board = document.getElementById("memoryBoard");
+        board.innerHTML = "";
+        shuffle(memoryItems).forEach((item, i) => {
+          const card = document.createElement("div");
+          card.textContent = "❓";
+          card.style.fontSize = "2rem";
+          card.style.background = "#eee";
+          card.style.padding = "15px";
+          card.style.textAlign = "center";
+          card.style.borderRadius = "8px";
+          card.style.cursor = "pointer";
+          card.dataset.value = item;
+          card.dataset.index = i;
+          card.onclick = () => flipCard(card);
+          board.appendChild(card);
+        });
+      }
+
+      function flipCard(card) {
+        if (memoryFlipped.length === 2 || memoryMatched.includes(card.dataset.index)) return;
+
+        card.textContent = card.dataset.value;
+        memoryFlipped.push(card);
+
+        if (memoryFlipped.length === 2) {
+          setTimeout(checkMemoryMatch, 600);
+        }
+      }
+
+      function checkMemoryMatch() {
+        const [a, b] = memoryFlipped;
+        if (a.dataset.value === b.dataset.value) {
+          memoryMatched.push(a.dataset.index, b.dataset.index);
+          document.getElementById("memoryStatus").textContent = "Super! Ein Paar gefunden.";
+        } else {
+          a.textContent = "❓";
+          b.textContent = "❓";
+          document.getElementById("memoryStatus").textContent = "Nicht ganz. Versuch es nochmal.";
+        }
+        memoryFlipped = [];
+      }
+
+      buildMemory();
+    </script>
+
+    <section class="card" id="kap5">
+      <h2>Sortierspiel – Was passt zusammen?</h2>
+      <p>Ziehe die Tiere in die richtige Box.</p>
+
+      <div style="display:flex;gap:1rem;margin-bottom:1rem;">
+        <div class="drag-item" draggable="true" ondragstart="drag(event)" id="dog">🐶 Hund</div>
+        <div class="drag-item" draggable="true" ondragstart="drag(event)" id="cat">🐱 Katze</div>
+        <div class="drag-item" draggable="true" ondragstart="drag(event)" id="car">🚗 Auto</div>
+      </div>
+
+      <div style="display:flex;gap:1rem;">
+        <div class="drop-zone" ondrop="dropSort(event)" ondragover="allowDrop(event)" data-accept="animal">
+          Tiere
+        </div>
+        <div class="drop-zone" ondrop="dropSort(event)" ondragover="allowDrop(event)" data-accept="object">
+          Dinge
+        </div>
+      </div>
+
+      <p id="sortResult" class="result"></p>
+    </section>
+
+    <script>
+      function dropSort(ev) {
+        ev.preventDefault();
+        const id = ev.dataTransfer.getData("text");
+        const item = document.getElementById(id);
+        const zone = ev.target;
+
+        const type = (id === "dog" || id === "cat") ? "animal" : "object";
+
+        if (zone.dataset.accept === type) {
+          zone.appendChild(item);
+          zone.style.background = "#c6f6d5";
+          document.getElementById("sortResult").textContent = "Richtig sortiert!";
+        } else {
+          zone.style.background = "#fed7d7";
+          document.getElementById("sortResult").textContent = "Das passt nicht.";
+        }
+      }
+    </script>
+
+    <section class="card" id="kap6">
+      <h2>Muster‑Generator</h2>
+      <p>Klicke auf den Button und erkenne das Muster.</p>
+
+      <div id="genPattern" class="pattern-box">---</div>
+      <button class="btn" onclick="newPattern()">Neues Muster</button>
+    </section>
+
+    <script>
+      const patternSets = [
+        ["🔵", "🟡"],
+        ["❤️", "💚", "💚"],
+        ["⭐", "⭐", "✨"],
+        ["🐶", "🐱"]
+      ];
+
+      function newPattern() {
+        const p = patternSets[Math.floor(Math.random() * patternSets.length)];
+        let out = "";
+        for (let i = 0; i < 6; i++) {
+          out += p[i % p.length];
+        }
+        document.getElementById("genPattern").textContent = out;
+      }
+    </script>
+
+    <section class="card" id="kap7">
+      <h2>Fehler‑Finder – Wo liegt die KI falsch?</h2>
+      <p>Die „KI“ denkt: „Alle Hunde sind groß.“ Stimmt das?</p>
+
+      <div class="choices">
+        <span onclick="biasCheck(this, false)">🐕 Großer Hund</span>
+        <span onclick="biasCheck(this, true)">🐕‍🦺 Kleiner Hund</span>
+      </div>
+
+      <p id="biasResult" class="result"></p>
+    </section>
+
+    <script>
+      function biasCheck(el, isCorrect) {
+        if (isCorrect) {
+          el.classList.add("correct");
+          document.getElementById("biasResult").textContent = "Richtig! Die KI hat falsch gelernt.";
+        } else {
+          el.classList.add("wrong");
+          document.getElementById("biasResult").textContent = "Nicht ganz. Schau nochmal.";
+        }
+      }
+    </script>
+
+    <!-- Kapitel 8 -->
+    <section class="card" id="kap8">
+      <h2>Projekte</h2>
+
+      <p>Hier kannst du kreativ werden.</p>
+
+      <button class="btn" onclick="generateProject()">Neues Projekt</button>
+      <p id="projectBox" class="result"></p>
+    </section>
+    <script>
+      /* --- Projekt Generator --- */
+const projects = [
+  "Erfinde ein Tier und male es.",
+  "Baue einen Roboter aus Lego.",
+  "Erfinde eine Geschichte und lass die KI sie erweitern.",
+  "Male ein Muster und lass die KI ein neues erzeugen.",
+  "Erfinde eine Maschine, die etwas Lustiges kann."
+];
+function generateProject(){
+  const p = projects[Math.floor(Math.random()*projects.length)];
+  document.getElementById("projectBox").textContent = p;
+}
+    </script>
+
+  </main>
+
+  <script>
+    // Muster-Spiel
+    function extendPattern() {
+      const pattern = document.getElementById("pattern");
+      pattern.textContent += "🔵🟡";
+    }
+
+    // Odd-one-out
+    function checkOdd(el, isOdd) {
+      const result = document.getElementById("oddResult");
+      if (isOdd) {
+        el.classList.add("correct");
+        result.textContent = "Richtig! Das passt nicht dazu.";
+      } else {
+        el.classList.add("wrong");
+        result.textContent = "Fast! Versuch es nochmal.";
+      }
+    }
+
+    // Drag & Drop
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+    function drop(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text");
+      const correct = ev.target.getAttribute("data-correct");
+      const result = document.getElementById("dragResult");
+
+      if (data === correct) {
+        ev.target.style.background = "#c6f6d5";
+        result.textContent = "Super! Die Regel passt.";
+      } else {
+        ev.target.style.background = "#fed7d7";
+        result.textContent = "Das passt nicht.";
+      }
+    }
+
+    // Fantasie-Tier Generator
+    const ideas = [
+      "Ein fliegender Elefant mit Regenbogenohren",
+      "Ein Löwe, der im Dunkeln leuchtet",
+      "Ein Fisch, der auf Bäumen wohnt",
+      "Ein Hund mit Flügeln und Katzenaugen",
+      "Ein Roboter‑Pinguin, der tanzen kann"
+    ];
+
+    function generateIdea() {
+      const idea = ideas[Math.floor(Math.random() * ideas.length)];
+      document.getElementById("ideaBox").textContent = idea;
+    }
+  </script>
+
+</body>
+
+</html>
