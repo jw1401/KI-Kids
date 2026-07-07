@@ -3,157 +3,22 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>KI-Abenteuer – Interaktive Lernseite</title>
+  <title>KI Abenteuer – Interaktive Lernseite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
+  <link rel="stylesheet" href="styles.css">
 
-    body {
-      font-family: system-ui, sans-serif;
-      background: #f7f7fb;
-      margin: 0;
-      padding: 0;
-      line-height: 1.5;
-    }
-
-    header {
-      background: linear-gradient(135deg, #2b6cb0, #805ad5);
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 1.5rem;
-    }
-
-    section {
-      scroll-margin-top: 120px;
-      /* Höhe deiner Menüleiste */
-    }
-
-    h2 {
-      color: #2b6cb0;
-      margin-top: 2rem;
-    }
-
-    .card {
-      background: white;
-      padding: 1rem 1.25rem;
-      border-radius: 0.75rem;
-      border: 1px solid #ddd;
-      margin-bottom: 1.5rem;
-    }
-
-    .task {
-      margin: 1rem 0;
-    }
-
-    .pattern-box {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .btn {
-      background: #2b6cb0;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      border: none;
-      cursor: pointer;
-      margin-top: 0.5rem;
-    }
-
-    .btn:hover {
-      background: #1e4f80;
-    }
-
-    .choices span {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background: #eee;
-      border-radius: 0.5rem;
-      margin: 0.25rem;
-      cursor: pointer;
-    }
-
-    .choices span.correct {
-      background: #c6f6d5;
-    }
-
-    .choices span.wrong {
-      background: #fed7d7;
-    }
-
-    .drag-container {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .drag-item,
-    .drop-zone {
-      padding: 0.75rem;
-      background: #eee;
-      border-radius: 0.5rem;
-      min-width: 120px;
-      text-align: center;
-      cursor: grab;
-    }
-
-    .drop-zone {
-      background: #e3f2fd;
-      border: 2px dashed #2b6cb0;
-    }
-
-    .result {
-      margin-top: 0.5rem;
-      font-weight: bold;
-    }
-
-    .menu {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: #ffffffee;
-      backdrop-filter: blur(6px);
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      padding: 0.75rem;
-      border-bottom: 2px solid #ddd;
-    }
-
-    .menu a {
-      text-decoration: none;
-      font-weight: 600;
-      color: #2b6cb0;
-      background: #e3f2fd;
-      padding: 0.5rem 0.75rem;
-      border-radius: 0.5rem;
-      transition: 0.2s;
-    }
-
-    .menu a:hover {
-      background: #2b6cb0;
-      color: white;
-    }
-  </style>
 </head>
 
 <body>
 
   <header>
-    <h1>KI‑Abenteuer – Interaktive Lernseite</h1>
+    <h1>KI Abenteuer – Interaktive Lernseite</h1>
     <p>Spiele, Rätsel und Experimente für Kinder ab 6 Jahren</p>
   </header>
 
   <nav class="menu">
+    <a href="./index.html">Start</a>
     <a href="#kap1">Muster</a>
     <a href="#kap2">Wenn‑Dann</a>
     <a href="#kap3">KI ausprobieren</a>
@@ -162,7 +27,7 @@
     <a href="#kap6">Mustergenerator</a>
     <a href="#kap7">Fehler-Finder</a>
     <a href="#kap8">Projekte</a>
-    <a href="./index.html">Start</a>
+
   </nav>
 
 
@@ -388,17 +253,17 @@
     </section>
     <script>
       /* --- Projekt Generator --- */
-const projects = [
-  "Erfinde ein Tier und male es.",
-  "Baue einen Roboter aus Lego.",
-  "Erfinde eine Geschichte und lass die KI sie erweitern.",
-  "Male ein Muster und lass die KI ein neues erzeugen.",
-  "Erfinde eine Maschine, die etwas Lustiges kann."
-];
-function generateProject(){
-  const p = projects[Math.floor(Math.random()*projects.length)];
-  document.getElementById("projectBox").textContent = p;
-}
+      const projects = [
+        "Erfinde ein Tier und male es.",
+        "Baue einen Roboter aus Lego.",
+        "Erfinde eine Geschichte und lass die KI sie erweitern.",
+        "Male ein Muster und lass die KI ein neues erzeugen.",
+        "Erfinde eine Maschine, die etwas Lustiges kann."
+      ];
+      function generateProject() {
+        const p = projects[Math.floor(Math.random() * projects.length)];
+        document.getElementById("projectBox").textContent = p;
+      }
     </script>
 
   </main>
